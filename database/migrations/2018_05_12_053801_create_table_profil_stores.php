@@ -17,8 +17,9 @@ class CreateTableProfilStores extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('logo', 128);
-            $table->string('icon', 16);
-            $table->string('links', 128);
+            $table->string('address');
+            $table->string('telp', 16);
+            $table->string('email', 128);
             $table->timestamps();
         });
     }

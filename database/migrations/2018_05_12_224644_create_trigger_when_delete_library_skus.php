@@ -32,6 +32,6 @@ class CreateTriggerWhenDeleteLibrarySkus extends Migration
      */
     public function down()
     {
-        DB::unoreoared("DROP TRIGGER when_delete_library_skus");
+        DB::unprepared("DROP TRIGGER when_delete_library_skus");
     }
 }

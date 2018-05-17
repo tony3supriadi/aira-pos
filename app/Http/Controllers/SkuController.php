@@ -21,9 +21,16 @@ class SkuController extends Controller
     public function search($src)
     {
         return DB::table('libraryskus')
-            ->where('sku', 'like', '%'.$src.'%')
+            ->orwhere('sku', 'like', '%'.$src.'%')
             ->orwhere('name', 'like', '%'.$src.'%')
             ->orwhere('price', 'like', '%'.$src.'%')
+            ->get();
+    }
+
+    public function library($id)
+    {
+        return DB::table('libraryskus')
+            ->where('itemId', $id)
             ->get();
     }
 

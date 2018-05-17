@@ -18,6 +18,7 @@ class CreateTablePurchaseOrders extends Migration
             $table->integer('supplierId')->unsigned();
             $table->text('note');
             $table->double('totalPrice', 16, 0);
+            $table->enum('status', ['PayOut', 'Panding']);
             $table->foreign('supplierId')->references('id')->on('suppliers');
             $table->timestamps();
         });

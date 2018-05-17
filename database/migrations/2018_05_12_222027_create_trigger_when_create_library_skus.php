@@ -18,7 +18,7 @@ class CreateTriggerWhenCreateLibrarySkus extends Migration
                 AFTER INSERT ON libraryskus 
                 FOR EACH ROW
                 BEGIN
-                    INSERT INTO librarystocks (id, stockLast, stockPurchase, stockSales, inStock) VALUES (NEW.id, 0, 0, 0, 0);
+                    INSERT INTO librarystocks VALUES (NEW.id, 0, 0, 0, 0, NOW(), NOW());
                 END
         ");
     }

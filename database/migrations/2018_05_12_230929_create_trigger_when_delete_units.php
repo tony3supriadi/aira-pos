@@ -18,8 +18,8 @@ class CreateTriggerWhenDeleteUnits extends Migration
                 BEFORE DELETE ON units
                 FOR EACH ROW
                 BEGIN
-                    UPDATE libraryskus SET unitId='1' WHERE unitId=OLD.id;
-                    UPDATE purchaseorderitems SET unitId='1' WHERE unitId=OLD.id;
+                    UPDATE libraryskus SET unitId='1' WHERE itemId=OLD.id;
+                    UPDATE purchaseorderitems SET unitId='1' WHERE itemId=OLD.id;
                 END
         ");
     }

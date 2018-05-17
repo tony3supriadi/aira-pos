@@ -19,8 +19,8 @@ class CreateTriggerWhenDeleteLibrarySkus extends Migration
                 FOR EACH ROW
                 BEGIN
                     DELETE FROM librarystocks WHERE id=OLD.id;
-                    DELETE FROM purchaseorderitems WHERE unitId=OLD.id;
-                    DELETE FROM saleitems WHERE unitId=OLD.id;
+                    DELETE FROM purchaseorderitems WHERE itemId=OLD.id;
+                    DELETE FROM saleitems WHERE itemId=OLD.id;
                 END
         ");
     }

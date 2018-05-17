@@ -16,3 +16,7 @@ Route::resource('/sku', 'SkuController')->except([
     'create', 'edit', 'store'
 ]);
 Route::get('/sku/search/{src}', 'SkuController@search');
+
+Route::resource('/supplier', 'SupplierController')->except([
+    'create', 'edit'
+]);

@@ -16,10 +16,10 @@ class CreateTableCustomers extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('placeBrithday', 64);
-            $table->date('dateBrithday');
-            $table->text('address');
-            $table->string('telp', 16);
+            $table->string('placeBrithday', 64)->nullable();
+            $table->date('dateBrithday')->nullable();
+            $table->text('address')->nullable();
+            $table->string('telp', 16)->nullable();
             $table->enum('customer', ['member', 'guest']);
             $table->timestamps();
         });

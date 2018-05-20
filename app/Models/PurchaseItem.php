@@ -14,8 +14,7 @@ class PurchaseItem extends Model
         'itemId',
         'unitId',
         'count',
-        'unitCost', 
-        'subTotal'
+        'purchaseItems'
     ];
 
 }

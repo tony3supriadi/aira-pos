@@ -19,8 +19,7 @@ class CreateTablePurchaseOrderItems extends Migration
             $table->integer('itemId')->unsigned();
             $table->integer('unitId')->unsigned();
             $table->smallInteger('count')->unsigned();
-            $table->double('unitCost', 16, 0);
-            $table->double('subTotal', 16, 0);
+            $table->double('purchaseItems', 16, 0)->unsigned();
             $table->foreign('purchaseId')->references('id')->on('purchaseOrders');
             $table->foreign('itemId')->references('id')->on('librarySkus');
             $table->foreign('unitId')->references('id')->on('units');

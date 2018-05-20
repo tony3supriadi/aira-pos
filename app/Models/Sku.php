@@ -14,6 +14,7 @@ class Sku extends Model
         'unitId',
         'sku',
         'name',
+        'buyPrice',
         'price',
         'discount'
     ];

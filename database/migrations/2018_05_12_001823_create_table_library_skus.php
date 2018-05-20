@@ -19,8 +19,9 @@ class CreateTableLibrarySkus extends Migration
             $table->integer('unitId')->unsigned();
             $table->string('sku', 16)->unique();
             $table->string('name');
+            $table->double('buyPrice')->unsigned();
             $table->double('price', 16, 0)->unsigned();
-            $table->tinyInteger('discount')->unsigned();
+            $table->tinyInteger('discount')->unsigned()->nullable();
             $table->foreign('itemId')->references('id')->on('libraryItems');
             $table->foreign('unitId')->references('id')->on('units');
             $table->timestamps();

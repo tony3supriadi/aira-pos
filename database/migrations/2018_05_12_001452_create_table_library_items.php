@@ -17,8 +17,8 @@ class CreateTableLibraryItems extends Migration
             $table->increments('id');
             $table->integer('categoryId')->unsigned();
             $table->string('name');
-            $table->string('image');
-            $table->text('description');
+            $table->string('image')->nullable();
+            $table->text('description')->nullable();
             $table->foreign('categoryId')->references('id')->on('categories');
             $table->timestamps();
         });

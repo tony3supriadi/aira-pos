@@ -12,18 +12,34 @@ class PurchaseController extends Controller
     
     public function index()
     {
+        $data = DB::table('purchaseOrders')
+            ->join('suppliers', 'purchaseOrders.supplierId', '=', 'suppliers.id')
+            ->select('purchaseOrders.*', 'suppliers.name as supplierName')
+            ->get();
         return Purchase::all();
     }
 
     public function show($id)
     {
-        return Purchase::find($id);
+        $data = DB::table('purchaseOrders')
+            ->join('suppliers', 'purchaseOrders.supplierId', '=', 'suppliers.id')
+            ->select('purchaseOrders.*', 'suppliers.name as supplierName')
+            ->first();
+        $data->items = DB::table('purchaseOrderItems')
+            ->select('purchaseOrderItems.*', 'librarySkus.name as ItemName','units.symbol')
+            ->join('librarySkus', 'purchaseOrderItems.itemId', '=', 'librarySkus.id')
+            ->join('units', 'purchaseOrderItems.unitId', '=', 'units.id')
+            ->where('purchaseId', $id)
+            ->get();
+        return response()->json($data, 200);
     }
 
     public function between($start, $end)
     {
         return DB::table('purchaseOrders')
-            ->whereBetween('created_at', [$start, $end])
+            ->select('purchaseOrders.*', 'suppliers.name as supplierName')
+            ->join('suppliers', 'purchaseOrders.supplierId', '=', 'suppliers.id')
+            ->whereBetween('purchaseOrders.created_at', [$start, $end])
             ->get();
     }
 
@@ -33,18 +49,17 @@ class PurchaseController extends Controller
 
         $supplierId = $request->post('supplierId');
         $note = $request->post('note');
-        $totalPrice = $request->post('totalPrice');
+        $purchase = $request->post('purchase');
         $status = $request->post('status');
         $itemId = $request->post('itemId');
         $unitId = $request->post('unitId');
         $count = $request->post('count');
-        $unitCost = $request->post('unitCost');
-        $subTotal = $request->post('subTotal');
+        $purchaseItems = $request->post('purchaseItems');
 
         $data = Purchase::create([
             'supplierId' => $supplierId,
             'note' => $note,
-            'totalPrice' => $totalPrice,
+            'purchase' => $purchase,
             'status' => $status
         ]);
 
@@ -54,8 +69,7 @@ class PurchaseController extends Controller
                 'itemId' => $itemId[$i],
                 'unitId' => $unitId[$i],
                 'count' => $count[$i],
-                'unitCost' => $unitCost[$i],
-                'subTotal' => $subTotal[$i]
+                'purchaseItems' => $purchaseItems[$i]
             ]);
             $items[] = $item;
         } 

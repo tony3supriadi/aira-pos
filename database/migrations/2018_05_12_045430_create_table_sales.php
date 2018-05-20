@@ -16,8 +16,9 @@ class CreateTableSales extends Migration
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customerId')->unsigned();
-            $table->text('note');
-            $table->double('totalSales', 16, 0)->unsigned();
+            $table->text('note')->nullable();
+            $table->double('sales', 16, 0)->unsigned();
+            $table->enum('status', ['PayOut', 'Panding']);
             $table->foreign('customerId')->references('id')->on('customers');
             $table->timestamps();
         });

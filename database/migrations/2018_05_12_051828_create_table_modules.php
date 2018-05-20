@@ -17,8 +17,8 @@ class CreateTableModules extends Migration
             $table->increments('id');
             $table->integer('parent')->unsigned();
             $table->string('name');
-            $table->string('icon');
-            $table->string('link');
+            $table->string('icon')->nullable();
+            $table->string('link')->nullable();
             $table->timestamps();
         });
     }

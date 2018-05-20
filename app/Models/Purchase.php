@@ -12,7 +12,8 @@ class Purchase extends Model
     protected $fillable = [
         'supplierId',
         'note',
-        'totalPrice'
+        'purchase',
+        'status'
     ];
 
 }

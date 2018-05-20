@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Library;
 use App\Models\Sku;
 
@@ -11,25 +12,32 @@ class LibraryController extends Controller
     
     public function index()
     {
-        return Library::all();
+        return DB::table('libraryItems')
+            ->select('libraryItems.*', 'categories.name as categoryName')
+            ->join('categories', 'libraryItems.categoryId', '=', 'categories.id')
+            ->get();
     }
 
     public function show($id)
     {
-        return Library::find($id);
+        $data = DB::table('libraryItems')
+            ->select('libraryItems.*', 'categories.name as categoryName')
+            ->join('categories', 'libraryItems.categoryId', '=', 'categories.id')
+            ->where('libraryItems.id', '=', $id)
+            ->first();
+        $data->items = DB::table('libraryskus')
+            ->select('librarySkus.*', 'units.symbol', 'libraryStocks.stockLast', 'libraryStocks.stockPurchase', 'libraryStocks.stockSales', 'libraryStocks.inStock')
+            ->join('libraryStocks', 'librarySkus.id', '=', 'libraryStocks.id')
+            ->join('units', 'librarySkus.unitId', '=', 'units.id')
+            ->where('itemId', $id)->get();
+
+        return response()->json($data, 200);
     }
 
     public function store(Request $request)
     {
         $imgName = '';
         $itemSkus = [];
-        $data = array([
-            'categoryId' => "",
-            'name' => "",
-            'image' => "",
-            'description' => "",
-            'itemSku' => []
-        ]);
 
         $categoryId = $request->post('categoryId');
         $name = $request->post('name');
@@ -37,6 +45,7 @@ class LibraryController extends Controller
         $unitId = $request->post('unitId');
         $sku = $request->post('sku');
         $nameVariant = $request->post('nameVariant');
+        $buyPrice = $request->post('buyPrice');
         $price = $request->post('price');
         $discount = $request->post('discount');
 
@@ -61,6 +70,7 @@ class LibraryController extends Controller
                 'unitId' => $unitId[$i],
                 'sku' => $sku[$i],
                 'name' => $nameVariant[$i],
+                'buyPrice' => $buyPrice[$i],
                 'price' => $price[$i],
                 'discount' => $discount[$i],
             ]);

@@ -16,8 +16,8 @@ class CreateTablePurchaseOrders extends Migration
         Schema::create('purchaseOrders', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('supplierId')->unsigned();
-            $table->text('note');
-            $table->double('totalPrice', 16, 0);
+            $table->text('note')->nullable();
+            $table->double('purchase', 16, 0);
             $table->enum('status', ['PayOut', 'Panding']);
             $table->foreign('supplierId')->references('id')->on('suppliers');
             $table->timestamps();

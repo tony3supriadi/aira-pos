@@ -17,11 +17,11 @@ class CreateTableEmployees extends Migration
             $table->increments('id');
             $table->integer('ruleId')->unsigned();
             $table->string('firstName', 64);
-            $table->string('lastName', 64);
-            $table->string('address');
-            $table->string('phone', 16);
-            $table->string('email', 128);
-            $table->text('note');
+            $table->string('lastName', 64)->nullable();
+            $table->string('address')->nullable();
+            $table->string('phone', 16)->nullable();
+            $table->string('email', 128)->nullable();
+            $table->text('note')->nullable();
             $table->foreign('ruleId')->references('id')->on('rules');
             $table->timestamps();
         });

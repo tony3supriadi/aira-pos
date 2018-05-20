@@ -10,12 +10,19 @@ class SkuController extends Controller
 {
     public function index()
     {
-        return Sku::all();
+        return DB::table('librarySkus')
+            ->select('librarySkus.*', 'libraryStocks.*')
+            ->join('libraryStocks', 'libraryStocks.id', '=', 'librarySkus.id')
+            ->get();
     }
 
     public function show($id)
     {
-        return Sku::find($id);
+        return DB::table('librarySkus')
+            ->select('librarySkus.*', 'libraryStocks.*')
+            ->join('libraryStocks', 'libraryStocks.id', '=', 'librarySkus.id')
+            ->where('librarySkus.id', '=', $id)
+            ->first();
     }
 
     public function search($src)

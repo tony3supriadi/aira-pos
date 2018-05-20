@@ -30,3 +30,7 @@ Route::get('/purchase/between/{start}/{end}', 'PurchaseController@between');
 Route::resource('/customer', 'CustomerController')->except([
     'create', 'edit'
 ]);
+
+Route::resource('/module', 'ModuleController')->except([
+    'create', 'edit'
+]);

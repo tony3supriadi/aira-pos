@@ -34,3 +34,7 @@ Route::resource('/customer', 'CustomerController')->except([
 Route::resource('/module', 'ModuleController')->except([
     'create', 'edit'
 ]);
+
+Route::resource('/rule', 'RuleController')->except([
+    'create', 'edit'
+]);

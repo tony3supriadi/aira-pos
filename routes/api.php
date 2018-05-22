@@ -43,3 +43,7 @@ Route::resource('/module', 'ModuleController')->except([
 Route::resource('/rule', 'RuleController')->except([
     'create', 'edit'
 ]);
+
+Route::resource('/employee', 'EmployeeController')->except([
+    'create', 'edit'
+]);

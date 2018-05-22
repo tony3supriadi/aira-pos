@@ -12,9 +12,10 @@ class SaleItem extends Model
     protected $fillable = [
         'saleId',
         'itemId',
+        'unitId',
         'count',
         'price',
-        'subTotal'
+        'saleItem'
     ];
 
 }

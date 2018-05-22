@@ -31,6 +31,11 @@ Route::resource('/customer', 'CustomerController')->except([
     'create', 'edit'
 ]);
 
+Route::resource('/sale', 'SaleController')->except([
+    'create', 'edit'
+]);
+Route::get('/sale/between/{start}/{end}', 'SaleController@between');
+
 Route::resource('/module', 'ModuleController')->except([
     'create', 'edit'
 ]);

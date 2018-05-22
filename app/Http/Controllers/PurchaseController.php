@@ -16,7 +16,7 @@ class PurchaseController extends Controller
             ->join('suppliers', 'purchaseOrders.supplierId', '=', 'suppliers.id')
             ->select('purchaseOrders.*', 'suppliers.name as supplierName')
             ->get();
-        return Purchase::all();
+        return response()->json($data, 200);
     }
 
     public function show($id)
@@ -29,7 +29,7 @@ class PurchaseController extends Controller
             ->select('purchaseOrderItems.*', 'librarySkus.name as ItemName','units.symbol')
             ->join('librarySkus', 'purchaseOrderItems.itemId', '=', 'librarySkus.id')
             ->join('units', 'purchaseOrderItems.unitId', '=', 'units.id')
-            ->where('purchaseId', $id)
+            ->where('purchaseOrderItems.purchaseId', $id)
             ->get();
         return response()->json($data, 200);
     }

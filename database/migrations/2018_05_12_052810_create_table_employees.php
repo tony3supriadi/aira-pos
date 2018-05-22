@@ -16,7 +16,7 @@ class CreateTableEmployees extends Migration
         Schema::create('employees', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('ruleId')->unsigned();
-            $table->string('nik')->unique();
+            $table->string('nik', 64)->unique();
             $table->string('password');
             $table->string('firstName', 64);
             $table->string('lastName', 64)->nullable();

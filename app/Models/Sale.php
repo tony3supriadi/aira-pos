@@ -11,7 +11,8 @@ class Sale extends Model
     protected $fillable = [
         'customerId',
         'note',
-        'totalSales'
+        'sales',
+        'status'
     ];
     
 }

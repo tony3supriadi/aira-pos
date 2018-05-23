@@ -47,3 +47,5 @@ Route::resource('/rule', 'RuleController')->except([
 Route::resource('/employee', 'EmployeeController')->except([
     'create', 'edit'
 ]);
+
+Route::post('/profile-store', 'ProfileController@update');

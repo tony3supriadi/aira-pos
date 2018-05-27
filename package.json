@@ -12,11 +12,14 @@
     "devDependencies": {
         "axios": "^0.18",
         "bootstrap": "^4.0.0",
+        "compass-mixins": "^0.12.10",
         "cross-env": "^5.1",
         "jquery": "^3.2",
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
+        "mdi": "2.1.19",
         "popper.js": "^1.12",
+        "simple-line-icons": "2.4.1",
         "vue": "^2.5.7",
         "vue-router": "^3.0.1"
     }

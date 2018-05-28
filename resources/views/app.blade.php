@@ -26,7 +26,15 @@
                 <!-- partial -->
 
                 <div class="main-panel">
-                    
+                    <!-- partial:partials/SidebarComponent.vue -->
+                    <container-component></container-component>
+                    <!-- partial -->
+
+                    <!-- partial:partials/_footer.html -->
+                    <footer class="footer">
+                        <footer-component></footer-component>
+                    </footer>
+                    <!-- partial -->
                 </div>
                 <!-- main-panel ends -->
             </div>

@@ -9,7 +9,6 @@ Vue.use(VueRouter);
 export default new VueRouter({
     mode: 'history',
     routes: [
-        { path: '', component: HomeComponent },
-        { path: '/example', component: ExampleComponent }
+        { path: '/dashboard', component: HomeComponent }
     ]
 });

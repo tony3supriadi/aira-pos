@@ -26,7 +26,15 @@
                 <!-- partial -->
 
                 <div class="main-panel">
-                    
+                    <!-- routerView -->
+                    <router-view></router-view>
+                    <!-- routerView -->
+
+                    <!-- partial:partials/FooterComponent.vue -->
+                    <footer class="footer">
+                        <footer-component></footer-component>
+                    </footer>
+                    <!-- partial -->
                 </div>
                 <!-- main-panel ends -->
             </div>

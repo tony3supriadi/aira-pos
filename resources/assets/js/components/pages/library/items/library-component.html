@@ -1,0 +1,20 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-cube"></i>
+                        Library
+                    </h4>
+                    <hr />
+
+                    <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                        <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :key="title.label" sortable="custom">
+                        </el-table-column>
+                    </data-tables>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

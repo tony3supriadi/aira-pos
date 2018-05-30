@@ -5,10 +5,13 @@ import VueRouter from 'vue-router';
 import HomeComponent from './components/HomeComponent';
 import ExampleComponent from './components/ExampleComponent.vue';
 
+/** import ./Library */
+import LibraryComponent from './components/pages/library/items/LibraryComponent.vue';
+
 Vue.use(VueRouter);
 export default new VueRouter({
-    mode: 'history',
     routes: [
-        { path: '/dashboard', component: HomeComponent }
+        { path: '/dashboard', component: HomeComponent },
+        { path: '/library', component: LibraryComponent }
     ]
 });

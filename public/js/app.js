@@ -54433,31 +54433,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         var _this = this;
 
         return {
+            hide: true,
+            show: false,
             data: [{
-                "content": "Water flood",
-                "flow_no": "FW201601010001",
-                "flow_type": "Repair",
-                "flow_type_code": "repair"
-            }, {
-                "content": "Lock broken",
-                "flow_no": "FW201601010002",
-                "flow_type": "Repair",
-                "flow_type_code": "repair"
-            }, {
-                "content": "Help to buy some drinks",
-                "flow_no": "FW201601010003",
-                "flow_type": "Help",
-                "flow_type_code": "help"
+                "name": "Pocari Sweat 350 ML",
+                "categories": "Drink"
             }],
             titles: [{
-                prop: "flow_no",
-                label: "NO."
+                prop: "name",
+                label: "Name"
             }, {
-                prop: "content",
-                label: "Content"
-            }, {
-                prop: "flow_type",
-                label: "Type"
+                prop: "categories",
+                label: "Categories",
+                width: "250"
             }],
             actionsDef: {
                 colProps: {
@@ -54466,12 +54454,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 def: [{
                     name: " New",
                     handler: function handler() {
-                        _this.data.push({
-                            content: "hello world",
-                            flow_no: "FW201601010004",
-                            flow_type: "Help",
-                            flow_type_code: "help"
-                        });
+                        _this.toggleColumnWidth();
                     },
                     icon: "mdi mdi-plus-circle"
                 }, {
@@ -54509,6 +54492,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         handleRowClick: function handleRowClick(row, event, column) {
             this.$message(row.flow_no + " is clicked");
             console.log(row, event, column);
+        },
+        toggleColumnWidth: function toggleColumnWidth() {
+            this.hide = !this.hide;
+            this.show = !this.show;
         }
     }
 });
@@ -54525,38 +54512,51 @@ var render = function() {
     _c("div", { staticClass: "row" }, [
       _c("div", { staticClass: "col-md-12 grid-margin stretch-card" }, [
         _c("div", { staticClass: "card" }, [
-          _c(
-            "div",
-            { staticClass: "card-body" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("hr"),
-              _vm._v(" "),
+          _c("div", { staticClass: "card-body" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("hr"),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
               _c(
-                "data-tables",
-                {
-                  attrs: {
-                    data: _vm.data,
-                    "actions-def": _vm.actionsDef,
-                    "pagination-def": _vm.paginationDef
-                  },
-                  on: { "row-click": _vm.handleRowClick }
-                },
-                _vm._l(_vm.titles, function(title) {
-                  return _c("el-table-column", {
-                    key: title.label,
-                    attrs: {
-                      prop: title.prop,
-                      label: title.label,
-                      sortable: "custom"
-                    }
-                  })
-                })
-              )
-            ],
-            1
-          )
+                "div",
+                { class: { "col-md-12": _vm.hide, "col-md-7": _vm.show } },
+                [
+                  _c(
+                    "data-tables",
+                    {
+                      attrs: {
+                        data: _vm.data,
+                        "actions-def": _vm.actionsDef,
+                        "pagination-def": _vm.paginationDef
+                      },
+                      on: { "row-click": _vm.handleRowClick }
+                    },
+                    _vm._l(_vm.titles, function(title) {
+                      return _c("el-table-column", {
+                        key: title.label,
+                        attrs: {
+                          prop: title.prop,
+                          label: title.label,
+                          width: title.width,
+                          sortable: "custom"
+                        }
+                      })
+                    })
+                  )
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _vm.show
+                ? _c("div", { staticClass: "col-md-5" }, [
+                    _vm._m(1),
+                    _vm._v(" "),
+                    _vm._m(2)
+                  ])
+                : _vm._e()
+            ])
+          ])
         ])
       ])
     ])
@@ -54570,6 +54570,85 @@ var staticRenderFns = [
     return _c("h4", { staticClass: "card-title" }, [
       _c("i", { staticClass: "mdi mdi-cube" }),
       _vm._v("\r\n                        Library\r\n                    ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("h5", { staticClass: "card-title" }, [
+      _c("i", { staticClass: "mdi mdi-plus-circle" }),
+      _vm._v(" New Library\r\n                            ")
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("form", { staticClass: "forms-sample" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "name" } }, [_vm._v("Library Name")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "name" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", [_vm._v("Image")]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "file-upload-default",
+          attrs: { type: "file", name: "image[]" }
+        }),
+        _vm._v(" "),
+        _c("div", { staticClass: "input-group col-xs-12" }, [
+          _c("input", {
+            staticClass: "form-control file-upload-info",
+            attrs: { type: "text", disabled: "" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "input-group-append" }, [
+            _c(
+              "button",
+              {
+                staticClass: "file-upload-browse btn btn-info",
+                attrs: { type: "button" }
+              },
+              [_vm._v("Upload")]
+            )
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "exampleInputCity1" } }, [
+          _vm._v("Categories")
+        ]),
+        _vm._v(" "),
+        _c("input", {
+          staticClass: "form-control",
+          attrs: { type: "text", id: "categories" }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "description" } }, [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("textarea", {
+          staticClass: "form-control",
+          attrs: { id: "description", rows: "2" }
+        })
+      ]),
+      _vm._v(" "),
+      _c(
+        "button",
+        { staticClass: "btn btn-success mr-2", attrs: { type: "submit" } },
+        [_vm._v("Submit")]
+      ),
+      _vm._v(" "),
+      _c("button", { staticClass: "btn btn-light" }, [_vm._v("Cancel")])
     ])
   }
 ]

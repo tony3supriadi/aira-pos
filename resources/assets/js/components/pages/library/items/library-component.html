@@ -8,11 +8,46 @@
                         Library
                     </h4>
                     <hr />
-
-                    <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
-                        <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :key="title.label" sortable="custom">
-                        </el-table-column>
-                    </data-tables>
+                    <div class="row">
+                        <div v-bind:class="{'col-md-12': hide, 'col-md-7': show}">
+                            <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                                <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                    sortable="custom">
+                                </el-table-column>
+                            </data-tables>
+                        </div>
+                        <div class="col-md-5" v-if="show">
+                            <h5 class="card-title">
+                                <i class="mdi mdi-plus-circle"></i> New Library
+                            </h5>
+                            <form class="forms-sample">
+                                <div class="form-group">
+                                    <label for="name">Library Name</label>
+                                    <input type="text" class="form-control" id="name">
+                                </div>
+                                <div class="form-group">
+                                    <label>Image</label>
+                                    <input type="file" name="image[]" class="file-upload-default">
+                                    <div class="input-group col-xs-12">
+                                        <input type="text" class="form-control file-upload-info" disabled>
+                                        <span class="input-group-append">
+                                            <button class="file-upload-browse btn btn-info" type="button">Upload</button>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="exampleInputCity1">Categories</label>
+                                    <input type="text" class="form-control" id="categories">
+                                </div>
+                                <div class="form-group">
+                                    <label for="description">Description</label>
+                                    <textarea class="form-control" id="description" rows="2"></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-success mr-2">Submit</button>
+                                <button class="btn btn-light">Cancel</button>
+                            </form>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

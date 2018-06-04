@@ -4,38 +4,23 @@
     export default {
         data() {
             return {
+                hide: true,
+                show: false,
                 data: [
                     {
-                        "content": "Water flood",
-                        "flow_no": "FW201601010001",
-                        "flow_type": "Repair",
-                        "flow_type_code": "repair",
-                    }, 
-                    {
-                        "content": "Lock broken",
-                        "flow_no": "FW201601010002",
-                        "flow_type": "Repair",
-                        "flow_type_code": "repair",
-                    }, 
-                    {
-                        "content": "Help to buy some drinks",
-                        "flow_no": "FW201601010003",
-                        "flow_type": "Help",
-                        "flow_type_code": "help"
+                        "name": "Pocari Sweat 350 ML",
+                        "categories": "Drink",
                     }
                 ],
                 titles : [
                     {
-                        prop: "flow_no",
-                        label: "NO."
+                        prop: "name",
+                        label: "Name"
                     }, 
                     {
-                        prop: "content",
-                        label: "Content"
-                    }, 
-                    {
-                        prop: "flow_type",
-                        label: "Type"
+                        prop: "categories",
+                        label: "Categories",
+                        width: "250"
                     }
                 ],
                 actionsDef: {
@@ -46,12 +31,7 @@
                         {
                             name: " New",
                             handler: () => {
-                                this.data.push({
-                                    content: "hello world",
-                                    flow_no: "FW201601010004",
-                                    flow_type: "Help",
-                                    flow_type_code: "help"
-                                });
+                                this.toggleColumnWidth()
                             },
                             icon: "mdi mdi-plus-circle"
                         },
@@ -91,6 +71,10 @@
             handleRowClick(row, event, column) {
                 this.$message(`${row.flow_no} is clicked`)
                 console.log(row, event, column)
+            },
+            toggleColumnWidth() {
+                this.hide = !this.hide
+                this.show = !this.show
             }
         }
     };

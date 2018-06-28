@@ -13,7 +13,8 @@ class Module extends Model
         'parent',
         'name',
         'icon',
-        'link'
+        'link',
+        'sort'
     ];
 
 }

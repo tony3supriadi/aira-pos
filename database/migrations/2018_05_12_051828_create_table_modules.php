@@ -19,6 +19,7 @@ class CreateTableModules extends Migration
             $table->string('name');
             $table->string('icon')->nullable();
             $table->string('link')->nullable();
+            $table->string('sort', 8)->nullable();
             $table->timestamps();
         });
     }

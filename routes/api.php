@@ -13,7 +13,7 @@ Route::resource('/library', 'LibraryController')->except([
 ]);
 
 Route::resource('/sku', 'SkuController')->except([
-    'create', 'edit', 'store'
+    'create', 'edit'
 ]);
 Route::get('/sku/library/{id}', 'SkuController@library');
 Route::get('/sku/search/{src}', 'SkuController@search');
@@ -36,6 +36,7 @@ Route::resource('/sale', 'SaleController')->except([
 ]);
 Route::get('/sale/between/{start}/{end}', 'SaleController@between');
 
+Route::get('/module/json', 'ModuleController@json');
 Route::resource('/module', 'ModuleController')->except([
     'create', 'edit'
 ]);

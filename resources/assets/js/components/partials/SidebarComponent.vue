@@ -45,11 +45,6 @@
                                         <i class="mdi mdi-chevron-double-right"></i>&nbsp; Categories
                                     </router-link>
                                 </li>
-                                <li class="nav-item">
-                                    <router-link to="units" class="nav-link">
-                                        <i class="mdi mdi-chevron-double-right"></i>&nbsp; Units
-                                    </router-link>
-                                </li>
                             </ul>
                         </div>
                     </li>
@@ -132,7 +127,7 @@
                         </div>
                     </li>
                     <li class="nav-item">
-                        <router-link class="nav-link" to="help">
+                        <router-link class="nav-link" to="module">
                             <span class="menu-icon mdi mdi-checkbox-multiple-blank"></span>
                             <span class="menu-title">Module</span>
                         </router-link>

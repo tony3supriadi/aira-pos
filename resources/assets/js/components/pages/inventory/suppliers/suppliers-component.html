@@ -1,0 +1,81 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-truck-fast"></i>
+                        Suppliers
+                    </h4>
+                    <hr />
+                    <div class="row">
+                        <transition name="slide-toggle">
+                            <div :class="{'slide-toggle': hide, 'slide-toggle-active': show}">
+                                <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                                    <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                        sortable="custom">
+                                    </el-table-column>
+                                </data-tables>
+                            </div>
+                        </transition>
+
+                        <transition name="slide-fade">
+                            <div class="col-md-5" v-if="show">
+                                <h5 class="card-title">
+                                    <i class="mdi mdi-plus-circle"></i> {{form}} Supplier
+                                </h5>
+                                <div :class="['form-group']">
+                                    <label for="name">Supplier Name <span class="text-danger">*</span></label>
+                                    <input v-if="form == 'New'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="item.name" name="name" id="name">
+                                    <input v-if="form == 'Edit'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="edit.name" name="name" id="name">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">Telephone <span class="text-danger">*</span></label>
+                                    <input v-if="form == 'New'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="item.telp" name="telp" id="telp">
+                                    <input v-if="form == 'Edit'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="edit.telp" name="telp" id="telp">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">Email</label>
+                                    <input v-if="form == 'New'" type="text" autocomplete="off" class="form-control" v-model="item.email" name="telp" id="email">
+                                    <input v-if="form == 'Edit'" type="text" autocomplete="off" class="form-control" v-model="edit.email" name="telp" id="email">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">Street Address</label>
+                                    <input v-if="form == 'New'" type="text" autocomplete="off" class="form-control" v-model="item.address" name="address" id="address">
+                                    <input v-if="form == 'Edit'" type="text" autocomplete="off" class="form-control" v-model="edit.address" name="address" id="address">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">City</label>
+                                    <input v-if="form == 'New'" type="text" autocomplete="off" class="form-control" v-model="item.city" name="address" id="city">
+                                    <input v-if="form == 'Edit'" type="text" autocomplete="off" class="form-control" v-model="edit.city" name="address" id="city">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">State</label>
+                                    <input v-if="form == 'New'" type="text" autocomplete="off" class="form-control" v-model="item.state" name="state" id="state">
+                                    <input v-if="form == 'Edit'" type="text" autocomplete="off" class="form-control" v-model="edit.state" name="state" id="state">
+                                </div>
+                                <div :class="['form-group']">
+                                    <label for="name">Zip</label>
+                                    <input v-if="form == 'New'" type="text" autocomplete="off" class="form-control" v-model="item.zip" name="zip" id="zip">
+                                    <input v-if="form == 'Edit'" type="text" autocomplete="off" class="form-control" v-model="edit.zip" name="zip" id="zip">
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button v-if="form == 'Edit'" @click="deleted" type="button" class="btn btn-danger mr-2">Delete</button>
+                                    </div>
+                                    <div class="col-md-8 text-right">
+                                        <input v-if="form == 'Edit'" type="hidden" v-model="edit.id" />
+
+                                        <button type="reset" @click="canceled" class="btn btn-light mr-2">Cancel</button>
+                                        <button type="button" v-if="form == 'New'" @click="created" :disabled="btnDisable" class="btn btn-success">Save</button>
+                                        <button type="button" v-if="form == 'Edit'" @click="updated" :disabled="btnDisable" class="btn btn-success">Update</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

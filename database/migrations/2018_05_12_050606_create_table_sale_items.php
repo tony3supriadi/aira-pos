@@ -17,13 +17,11 @@ class CreateTableSaleItems extends Migration
             $table->increments('id');
             $table->integer('saleId')->unsigned();
             $table->integer('itemId')->unsigned();
-            $table->integer('unitId')->unsigned();
             $table->smallInteger('count')->unsigned();
             $table->double('price', 16, 0)->unsigned();
             $table->double('saleItem', 16, 0)->unsigned();
             $table->foreign('saleId')->references('id')->on('sales');
             $table->foreign('itemId')->references('id')->on('librarySkus');
-            $table->foreign('unitId')->references('id')->on('units');
             $table->timestamps();
         });
     }

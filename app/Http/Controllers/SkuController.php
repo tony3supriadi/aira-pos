@@ -13,6 +13,7 @@ class SkuController extends Controller
         return DB::table('librarySkus')
             ->select('librarySkus.*', 'libraryStocks.*')
             ->join('libraryStocks', 'libraryStocks.id', '=', 'librarySkus.id')
+            ->orderBy('name', 'ASC')
             ->get();
     }
 
@@ -39,6 +40,12 @@ class SkuController extends Controller
         return DB::table('libraryskus')
             ->where('itemId', $id)
             ->get();
+    }
+
+    public function store(Request $request) 
+    {
+        $data = Sku::create($request->all());
+        return response()->json($data, 201);
     }
 
     public function update(Request $request, $id)

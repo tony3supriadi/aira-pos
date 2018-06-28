@@ -9,47 +9,96 @@
                     </h4>
                     <hr />
                     <div class="row">
-                        <div v-bind:class="{'col-md-12': hide, 'col-md-7': show}">
-                            <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
-                                <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
-                                    sortable="custom">
-                                </el-table-column>
-                            </data-tables>
-                        </div>
-                        <div class="col-md-5" v-if="show">
-                            <h5 class="card-title">
-                                <i class="mdi mdi-plus-circle"></i> New Library
-                            </h5>
-                            <form class="forms-sample">
-                                <div class="form-group">
-                                    <label for="name">Library Name</label>
-                                    <input type="text" class="form-control" id="name">
-                                </div>
-                                <div class="form-group">
-                                    <label>Image</label>
-                                    <input type="file" name="image[]" class="file-upload-default">
-                                    <div class="input-group col-xs-12">
-                                        <input type="text" class="form-control file-upload-info" disabled>
-                                        <span class="input-group-append">
-                                            <button class="file-upload-browse btn btn-info" type="button">Upload</button>
-                                        </span>
+                        <transition name="slide-toggle">
+                            <div :class="{'slide-toggle': hide, 'slide-toggle-active': show}">
+                                <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                                    <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                        sortable="custom">
+                                    </el-table-column>
+                                </data-tables>
+                            </div>
+                        </transition>
+
+                        <transition name="slide-fade">
+                            <div class="col-md-5" v-if="show">
+                                <h5 class="card-title">
+                                    <i class="mdi mdi-plus-circle"></i> {{form}} Library
+                                </h5>
+                                <form method="post" enctype="multipart/form-data">
+                                    <div class="form-group">
+                                        <label for="name">Library Name</label>
+                                        <input type="text" v-model="item.name" v-if="form == 'New'" autocomplete="off" class="form-control" name="name" id="name">
+                                        <input type="text" v-model="edit.name" v-if="form == 'Edit'" autocomplete="off" class="form-control" name="name" id="name">
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <label for="exampleInputCity1">Categories</label>
-                                    <input type="text" class="form-control" id="categories">
-                                </div>
-                                <div class="form-group">
-                                    <label for="description">Description</label>
-                                    <textarea class="form-control" id="description" rows="2"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-success mr-2">Submit</button>
-                                <button class="btn btn-light">Cancel</button>
-                            </form>
-                        </div>
+                                    <div class="form-group">
+                                        <label for="categoryId">Categories</label>
+                                        <select2 v-model="item.categoryId" v-if="form == 'New'" :options="selectOptions" />
+                                        <select2 v-model="edit.categoryId" v-if="form == 'Edit'" :options="selectOptions" />
+                                    </div>
+                                    <div v-if="form == 'New'" class="form-group">
+                                        <label for="variant-library">Variants Library</label>
+                                        <a href="#/library" v-b-modal.modal-form-variant class="float-right">
+                                            <small>New</small>
+                                        </a>
+                                        <table class="table table-stripped" width="100%">
+                                            <tr v-for="(variant, index) in item.variants">
+                                                <td>{{ variant.sku }}</td>
+                                                <td>{{ variant.name }}</td>
+                                                <td width="10px">
+                                                    <i @click="onRemove(index)" class="mdi mdi-close-circle text-danger"></i>
+                                                </td>
+                                            </tr>
+                                            <tr v-if="!item.variants.length">
+                                                <td colspan="3" class="text-center">No Data Variants</td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="description">Description</label>
+                                        <textarea class="form-control" v-if="form == 'New'" v-model="item.description" name="description" id="description" rows="3"></textarea>
+                                        <textarea class="form-control" v-if="form == 'Edit'" v-model="edit.description" name="description" id="description" rows="3"></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button v-if="form == 'Edit'" @click="deleted()" type="button" class="btn btn-danger mr-2">Delete</button>
+                                        </div>
+                                        <div class="col-md-8 text-right">
+                                            <input type="hidden" name="id" v-if="form == 'Edit'" v-model="edit.id">
+                                            <button type="reset" @click="cancel()" class="btn btn-light mr-2">Cancel</button>
+                                            <button type="button" @click="updated()" v-if="form == 'Edit'" class="btn btn-success">Update</button>
+                                            <button type="button" @click="saved()" v-if="form == 'New'" class="btn btn-success">Save</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </transition>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <!-- Modal Component -->
+    <b-modal id="modal-form-variant" title="New Varaint Libaray" ok-title="Add New" :ok-disabled="disabled" @ok="onSubmit" @shown="onReset">
+        <b-form @reset="onReset">
+            <div class="form-group">
+                <label for="sku">SKU<span class="text-danger">*</span></label>
+                <b-form-input id="sku" @input="onDisabled" v-model="variants.sku" type="text" autocomplete="off" required /></b-form-input>
+            </div>
+            <div class="form-group">
+                <label for="name">Name Variant<span class="text-danger">*</span></label>
+                <b-form-input id="name" @input="onDisabled" v-model="variants.name" type="text" autocomplete="off" required /></b-form-input>
+            </div>
+            <b-form-group id="label-buy-price" label="Purchase Price" label-for="purchase-price">
+                <b-form-input id="buyPrice" v-model="variants.buyPrice" autocomplete="off" type="text" required /></b-form-input>
+            </b-form-group>
+            <div class="form-group">
+                <label for="name">Selling Price<span class="text-danger">*</span></label>
+                <b-form-input id="price" @input="onDisabled" v-model="variants.price" type="text" autocomplete="off" required /></b-form-input>
+            </div>
+            <b-form-group id="label-discount" label="Discount" label-for="discount">
+                <b-form-input id="discount" v-model="variants.discount" type="text" autocomplete="off" required /></b-form-input>
+            </b-form-group>
+        </b-form>
+    </b-modal>
 </div>

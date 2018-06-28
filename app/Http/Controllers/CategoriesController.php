@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\Models\Category;
 
 class CategoriesController extends Controller
@@ -10,7 +11,7 @@ class CategoriesController extends Controller
     
     public function index()
     {
-        return Category::all();
+        return DB::table('categories')->orderBy('name', 'ASC')->get();
     }
 
     public function show($id)

@@ -1,0 +1,40 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-calendar"></i>
+                        Inventory Summary
+                    </h4>
+                    <hr />
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div style="margin-bottom: 10px">
+                                <el-row>
+                                    <el-col :span="18">
+                                        <el-button @click="onCreate">create 1 row</el-button>
+                                        <el-button @click="onCreate100">create 100 row</el-button>
+                                        <el-button @click="bulkDelete">bulk delete</el-button>
+                                    </el-col>
+
+                                    <el-col :span="6">
+                                        <el-input placeholder="search NO." v-model="filters[0].value"></el-input>
+                                    </el-col>
+                                </el-row>
+                            </div>
+
+                            <data-tables :data="data" :action-col="actionCol" :filters="filters" @selection-change="handleSelectionChange">
+                                <el-table-column type="selection" width="55">
+                                </el-table-column>
+
+                                <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :key="title.prop" sortable="custom">
+                                </el-table-column>
+                            </data-tables>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

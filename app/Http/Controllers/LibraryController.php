@@ -26,9 +26,8 @@ class LibraryController extends Controller
             ->where('libraryItems.id', '=', $id)
             ->first();
         $data->items = DB::table('libraryskus')
-            ->select('librarySkus.*', 'units.symbol', 'libraryStocks.stockLast', 'libraryStocks.stockPurchase', 'libraryStocks.stockSales', 'libraryStocks.inStock')
+            ->select('librarySkus.*', 'libraryStocks.stockLast', 'libraryStocks.stockPurchase', 'libraryStocks.stockSales', 'libraryStocks.inStock')
             ->join('libraryStocks', 'librarySkus.id', '=', 'libraryStocks.id')
-            ->join('units', 'librarySkus.unitId', '=', 'units.id')
             ->where('itemId', $id)->get();
 
         return response()->json($data, 200);
@@ -37,17 +36,7 @@ class LibraryController extends Controller
     public function store(Request $request)
     {
         $imgName = '';
-        $itemSkus = [];
-
-        $categoryId = $request->post('categoryId');
-        $name = $request->post('name');
-        $description = $request->post('description');
-        $unitId = $request->post('unitId');
-        $sku = $request->post('sku');
-        $nameVariant = $request->post('nameVariant');
-        $buyPrice = $request->post('buyPrice');
-        $price = $request->post('price');
-        $discount = $request->post('discount');
+        $sku = [];
 
         $image = $request->file('image');
         if (!empty($image)) {
@@ -58,25 +47,18 @@ class LibraryController extends Controller
         }
         
         $data = Library::create([
-            'categoryId' => $categoryId,
-            'name' => $name,
+            'categoryId' => $request->post('categoryId'),
+            'name' => $request->post('name'),
             'image' => $imgName,
-            'description' => $description
+            'description' => $request->post('description')
         ]);
 
-        for ($i = 0; $i < count($sku); $i++) {
-            $itemSku = Sku::create([
-                'itemId' => $data->id,
-                'unitId' => $unitId[$i],
-                'sku' => $sku[$i],
-                'name' => $nameVariant[$i],
-                'buyPrice' => $buyPrice[$i],
-                'price' => $price[$i],
-                'discount' => $discount[$i],
-            ]);
-            $itemSkus[] = $itemSku;
+        $variants = $request->post('variants');
+        for ($i = 0; $i < count($variants); $i++) {
+            $variants[$i]['itemId'] = $data->id;
+            $sku[$i] = Sku::create($variants[$i]);
         }
-        $data['itemSku'] = $itemSkus;
+        $data['variants'] = $sku;
 
         return response()->json($data, 200);
     }

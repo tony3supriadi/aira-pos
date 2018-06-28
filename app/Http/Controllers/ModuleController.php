@@ -11,6 +11,30 @@ class ModuleController extends Controller
     
     public function index()
     {
+        $data = [];
+        $index = 0;
+        $main = DB::table('modules')
+            ->orderBy('sort', 'ASC')->get();
+        for ($i = 0; $i < count($main); $i++) {
+            if (!$main[$i]->parent) {
+                $data[$index] = $main[$i];
+                $index++;
+
+                $sub = DB::table('modules')
+                    ->where('parent', $main[$i]->id)
+                    ->orderBy('sort', 'ASC')->get();
+                for ($j = 0; $j < count($sub); $j++) {
+                    $data[$index] = $sub[$j];
+                    $data[$index]->name = $main[$i]->name . " - " . $sub[$j]->name;
+                    $index++;
+                }
+            } 
+        }
+        return $data;
+    }
+
+    public function json()
+    {
         $main = DB::table('modules')
             ->where('parent', null)->get();
         for ($i = 0; $i < count($main); $i++) {

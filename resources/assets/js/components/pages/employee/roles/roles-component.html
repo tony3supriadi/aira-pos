@@ -3,17 +3,56 @@
         <div class="col-md-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
-                    <h4 class="card-title">
-                        <i class="mdi mdi-account-switch"></i>
-                        Employee Role
-                    </h4>
-                    <hr />
                     <div class="row">
-                        <div class="col-lg-7">
-                            
-                        </div>
                         <div class="col-lg-5">
+                            <h4 class="card-title">
+                                <i class="mdi mdi-account-switch"></i>
+                                Employee Role
+                            </h4>
+                            <hr />
 
+                            <div class="form-group">
+                                <label for="name">Rule Name</label>
+                                <input type="text" v-model="item.name" class="form-control">
+                            </div>
+                            <hr />
+                            <div class="row">
+                                <h5 class="col-lg-5">Modules: </h5>
+                                <div class="col-lg-7 text-right">
+                                    <a href="#/role" @click="choose = !choose">
+                                        <small>Choose
+                                            <i class="mdi mdi-arrow-right-drop-circle-outline"></i>
+                                        </small>
+                                    </a>
+                                </div>
+                            </div>
+                            <div v-if="choose">
+                                <div class="form-group" v-for="modules in modules">
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input type="checkbox" :value="1" v-model="item.modules" @input="setModules" class="form-check-input"> {{ modules.name }}
+                                            <i class="input-helper"></i>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr />
+                            <div class="form-group text-right">
+                                <button type="reset" class="btn btn-secondary">
+                                    Reset
+                                </button>
+                                <button @click="created" class="btn btn-success">
+                                    <i class="mdi mdi-content-save"></i>
+                                    Save
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-lg-7">
+                            <data-tables :data="data" :pagination-def="paginationDef" @row-click="onClickRowTable">
+                                <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                    sortable="custom">
+                                </el-table-column>
+                            </data-tables>
                         </div>
                     </div>
                 </div>

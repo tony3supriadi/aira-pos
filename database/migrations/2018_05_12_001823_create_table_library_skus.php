@@ -16,13 +16,12 @@ class CreateTableLibrarySkus extends Migration
         Schema::create('librarySkus', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('itemId')->unsigned();
-            $table->integer('unitId')->unsigned();
             $table->string('sku', 16)->unique();
             $table->string('name');
-            $table->double('price', 16, 0)->unsigned();
-            $table->tinyInteger('discount')->unsigned();
+            $table->double('buyPrice')->unsigned()->nullable();
+            $table->double('price', 16, 0)->unsigned()->nullable();
+            $table->tinyInteger('discount')->unsigned()->nullable();
             $table->foreign('itemId')->references('id')->on('libraryItems');
-            $table->foreign('unitId')->references('id')->on('units');
             $table->timestamps();
         });
     }

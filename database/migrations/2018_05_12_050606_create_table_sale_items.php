@@ -19,7 +19,7 @@ class CreateTableSaleItems extends Migration
             $table->integer('itemId')->unsigned();
             $table->smallInteger('count')->unsigned();
             $table->double('price', 16, 0)->unsigned();
-            $table->double('subTotal', 16, 0)->unsigned();
+            $table->double('saleItem', 16, 0)->unsigned();
             $table->foreign('saleId')->references('id')->on('sales');
             $table->foreign('itemId')->references('id')->on('librarySkus');
             $table->timestamps();

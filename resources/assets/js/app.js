@@ -1,22 +1,38 @@
+require('./bootstrap')
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
+import Vue from 'vue'
+import router from './routes'
 
-require('./bootstrap');
+import VueSlimScroll from 'vue-slimscroll'
 
-window.Vue = require('vue');
+import BootstrapVue from 'bootstrap-vue'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
 
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
+import VueSweetalert2 from 'vue-sweetalert2'
+import Select2 from 'v-select2-component';
 
-Vue.component('example-component', require('./components/ExampleComponent.vue'));
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
+import DataTables from 'vue-data-tables'
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
+
+locale.use(lang)
+
+Vue.use(ElementUI)
+Vue.use(DataTables)
+Vue.use(VueSlimScroll)
+Vue.use(BootstrapVue)
+Vue.use(VueSweetalert2)
+
+Vue.component('navbar-component', require('./components/partials/NavbarComponent.vue'))
+Vue.component('sidebar-component', require('./components/partials/SidebarComponent.vue'))
+Vue.component('footer-component', require('./components/partials/FooterComponent.vue'))
+
+/** Plugins */
+Vue.component('select2', Select2)
 
 const app = new Vue({
-    el: '#app'
-});
+    el: '#app',
+    router
+})

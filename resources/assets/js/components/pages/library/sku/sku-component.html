@@ -1,0 +1,114 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-cube"></i>
+                        Stock Keeping Unit (SKU)
+                    </h4>
+                    <hr />
+                    <div class="row">
+                        <transition name="slide-toggle">
+                            <div :class="{'slide-toggle': hide, 'slide-toggle-active': show}">
+                                <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                                    <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                        sortable="custom">
+                                    </el-table-column>
+                                </data-tables>
+                            </div>
+                        </transition>
+
+                        <transition name="slide-fade">
+                            <div class="col-md-5" v-if="show">
+                                <h5 class="card-title">
+                                    <i class="mdi mdi-plus-circle"></i> {{form}} Stock Keping Unit (SKU)
+                                </h5>
+                                <div v-if="form == 'New'">
+                                    <div class="form-group">
+                                        <label for="itemId">Item Library</label>
+                                        <select2 v-model="item.itemId" :options="selectOptions" v-on:change="onChange()" />
+                                    </div>
+                                    <hr />
+
+                                    <div v-if="newShow">
+                                        <h6>
+                                            <i class="mdi mdi-plus"></i> {{ newTitle }}</h6>
+                                        <br />
+                                        <div class="form-group">
+                                            <label for="sku">SKU
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <b-form-input id="sku" @input="onDisabled" v-model="item.sku" type="text" autocomplete="off" required /></b-form-input>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="name">Name Variant
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <b-form-input id="name" @input="onDisabled" v-model="item.name" type="text" autocomplete="off" required /></b-form-input>
+                                        </div>
+                                        <b-form-group id="label-buy-price" label="Purchase Price" label-for="purchase-price">
+                                            <b-form-input id="buyPrice" v-model="item.buyPrice" autocomplete="off" type="text" required /></b-form-input>
+                                        </b-form-group>
+                                        <div class="form-group">
+                                            <label for="name">Selling Price
+                                                <span class="text-danger">*</span>
+                                            </label>
+                                            <b-form-input id="price" @input="onDisabled" v-model="item.price" type="text" autocomplete="off" required /></b-form-input>
+                                        </div>
+                                        <b-form-group id="label-discount" label="Discount" label-for="discount">
+                                            <b-form-input id="discount" v-model="item.discount" type="text" autocomplete="off" required /></b-form-input>
+                                        </b-form-group>
+
+                                        <div class="row">
+                                            <div class="col-md-12 text-right">
+                                                <button type="reset" @click="cancel()" class="btn btn-light mr-2">Cancel</button>
+                                                <button type="button" @click="saved()" :disabled="disabled" class="btn btn-success">Save</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-if="form == 'Edit'">
+                                    <div class="form-group">
+                                        <label for="sku">SKU
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <b-form-input id="sku" @input="onDisabled" v-model="edit.sku" type="text" autocomplete="off" required /></b-form-input>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="name">Name Variant
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <b-form-input id="name" @input="onDisabled" v-model="edit.name" type="text" autocomplete="off" required /></b-form-input>
+                                    </div>
+                                    <b-form-group id="label-buy-price" label="Purchase Price" label-for="purchase-price">
+                                        <b-form-input id="buyPrice" v-model="edit.buyPrice" autocomplete="off" type="text" required /></b-form-input>
+                                    </b-form-group>
+                                    <div class="form-group">
+                                        <label for="name">Selling Price
+                                            <span class="text-danger">*</span>
+                                        </label>
+                                        <b-form-input id="price" @input="onDisabled" v-model="edit.price" type="text" autocomplete="off" required /></b-form-input>
+                                    </div>
+                                    <b-form-group id="label-discount" label="Discount" label-for="discount">
+                                        <b-form-input id="discount" v-model="edit.discount" type="text" autocomplete="off" required /></b-form-input>
+                                    </b-form-group>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button @click="deleted()" type="button" class="btn btn-danger mr-2">Delete</button>
+                                        </div>
+                                        <div class="col-md-8 text-right">
+                                            <input type="hidden" name="id" v-if="form == 'Edit'" v-model="edit.id">
+                                            <button type="reset" @click="cancel()" class="btn btn-light mr-2">Cancel</button>
+                                            <button type="button" @click="updated()" class="btn btn-success">Update</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

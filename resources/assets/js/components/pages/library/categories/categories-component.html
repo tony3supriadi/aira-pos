@@ -1,0 +1,52 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title">
+                        <i class="mdi mdi-cube"></i>
+                        Categories
+                    </h4>
+                    <hr />
+                    <div class="row">
+                        <transition name="slide-toggle">
+                            <div :class="{'slide-toggle': hide, 'slide-toggle-active': show}">
+                                <data-tables :data="data" :actions-def="actionsDef" :pagination-def="paginationDef" @row-click="handleRowClick">
+                                    <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label" sortable="custom">
+                                    </el-table-column>
+                                </data-tables>
+                            </div>
+                        </transition>
+                        
+                        <transition name="slide-fade">
+                            <div class="col-md-5" v-if="show">
+                                <h5 class="card-title">
+                                    <i class="mdi mdi-plus-circle"></i> {{form}} Categories
+                                </h5>
+                                <!-- <form v-on:submit="create" method="post" class="forms-sample"> -->
+                                    <div :class="['form-group']">
+                                        <label for="name">Category Name <span class="text-danger">*</span></label>
+                                        <input v-if="form == 'New'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="item.name" name="name" id="name">
+                                        <input v-if="form == 'Edit'" type="text" @input="onDisabled" autocomplete="off" class="form-control" v-model="edit.name" name="name" id="name">
+
+                                        <input v-if="form == 'Edit'" type="hidden" v-model="item.id" />
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <button v-if="form == 'Edit'" @click="deleteAction(edit.id)" type="button" class="btn btn-danger mr-2">Delete</button>
+                                        </div>
+                                        <div class="col-md-8 text-right">
+                                            <button type="reset" @click="cancel()" class="btn btn-light mr-2">Cancel</button>
+                                            <button type="button" v-if="form == 'New'" @click="create()" :disabled="disabled"class="btn btn-success">Save</button>
+                                            <button type="button" v-if="form == 'Edit'" @click="update(edit.id)" :disabled="disabled" class="btn btn-success">Update</button>                                            
+                                        </div>
+                                    </div>
+                                <!-- </form> -->
+                            </div>
+                        </transition>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -15,10 +15,11 @@ class CreateTableModules extends Migration
     {
         Schema::create('modules', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('parent')->unsigned();
+            $table->integer('parent')->unsigned()->nullable();
             $table->string('name');
-            $table->string('icon');
-            $table->string('link');
+            $table->string('icon')->nullable();
+            $table->string('link')->nullable();
+            $table->string('sort', 8)->nullable();
             $table->timestamps();
         });
     }

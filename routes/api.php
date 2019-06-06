@@ -1,18 +1,52 @@
 <?php
 
-use Illuminate\Http\Request;
+Route::resource('/category', 'CategoriesController')->except([
+    'create', 'edit'
+]);
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::resource('/unit', 'UnitsController')->except([
+    'create', 'edit'
+]);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::resource('/library', 'LibraryController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/sku', 'SkuController')->except([
+    'create', 'edit'
+]);
+Route::get('/sku/library/{id}', 'SkuController@library');
+Route::get('/sku/search/{src}', 'SkuController@search');
+
+Route::resource('/supplier', 'SupplierController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/purchase', 'PurchaseController')->except([
+    'create', 'edit'
+]);
+Route::get('/purchase/between/{start}/{end}', 'PurchaseController@between');
+
+Route::resource('/customer', 'CustomerController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/sale', 'SaleController')->except([
+    'create', 'edit'
+]);
+Route::get('/sale/between/{start}/{end}', 'SaleController@between');
+
+Route::get('/module/json', 'ModuleController@json');
+Route::resource('/module', 'ModuleController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/rule', 'RuleController')->except([
+    'create', 'edit'
+]);
+
+Route::resource('/employee', 'EmployeeController')->except([
+    'create', 'edit'
+]);
+
+Route::post('/profile-store', 'ProfileController@update');

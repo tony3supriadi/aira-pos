@@ -1,0 +1,71 @@
+<div class="content-wrapper">
+    <div class="row">
+        <div class="col-md-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-lg-4">
+                            <h4 class="card-title">
+                                <i class="mdi mdi-view-module"></i>
+                                Module
+                            </h4>
+                            <hr />
+                            <div class="form-group">
+                                <label for="name">Module Name
+                                    <span class="text-danger">*</span>
+                                </label>
+                                <input type="text" v-model="item.name" @input="onInput" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="icon">Icon</label>
+                                <input type="text" v-model="item.icon" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label for="link">Link</label>
+                                <input type="text" v-model="item.link" class="form-control">
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <div class="form-check">
+                                    <label class="form-check-label">
+                                        <input type="checkbox" v-model="subModule" @change="item.parent = ''" class="form-check-input"> This is Sub Module?
+                                        <i class="input-helper"></i>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="form-group" v-if="subModule">
+                                <select2 v-model="item.parent" :options="parents" @change="onChange" />
+                            </div>
+                            <hr />
+                            <div class="form-group">
+                                <label for="sort">Sort</label>
+                                <input type="text" v-model="item.sort" class="form-control">
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <button type="button" v-if="btnDelete" @click="deleted()" class="btn btn-danger mr-2">Delete</button>
+                                </div>
+                                <div class="col-md-8 text-right">
+                                    <button type="reset" @click="onReset()" class="btn btn-light mr-2">Reset</button>
+                                    <button type="button" v-if="!btnDelete" @click="saved()" :disabled="btnDisable" class="btn btn-success">
+                                        <i class="mdi mdi-save"></i> Save
+                                    </button>
+                                    <button type="button" v-if="btnDelete" @click="updated()" :disabled="btnDisable" class="btn btn-success">
+                                        <i class="mdi mdi-save"></i> Update
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-8">
+                            <data-tables :data="data" :pagination-def="paginationDef" @row-click="onClickRowTable">
+                                <el-table-column v-for="title in titles" :prop="title.prop" :label="title.label" :width="title.width" :key="title.label"
+                                    sortable="custom">
+                                </el-table-column>
+                            </data-tables>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

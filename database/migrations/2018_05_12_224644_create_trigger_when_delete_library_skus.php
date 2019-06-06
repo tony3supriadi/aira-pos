@@ -19,8 +19,8 @@ class CreateTriggerWhenDeleteLibrarySkus extends Migration
                 FOR EACH ROW
                 BEGIN
                     DELETE FROM librarystocks WHERE id=OLD.id;
-                    DELETE FROM purchaseorderitems WHERE unitId=OLD.id;
-                    DELETE FROM saleitems WHERE unitId=OLD.id;
+                    DELETE FROM purchaseorderitems WHERE itemId=OLD.id;
+                    DELETE FROM saleitems WHERE itemId=OLD.id;
                 END
         ");
     }
@@ -32,6 +32,6 @@ class CreateTriggerWhenDeleteLibrarySkus extends Migration
      */
     public function down()
     {
-        DB::unoreoared("DROP TRIGGER when_delete_library_skus");
+        DB::unprepared("DROP TRIGGER when_delete_library_skus");
     }
 }
